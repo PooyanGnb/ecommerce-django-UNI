@@ -137,7 +137,6 @@
                     <div class="product-img position-relative overflow-hidden">
                         <img class="img-fluid w-100" src="{{product.image.url}}" alt="">
                         <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href="{% url 'shop:detail' slug=product.slug %}"><i class="fa fa-search"></i></a>
                         </div>
                     </div>
@@ -145,6 +144,7 @@
                         <a class="h6 text-decoration-none text-truncate" href="{% url 'shop:detail' slug=product.slug %}">{{product.name}}</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
                             <h5>${{product.price}}</h5><!-- <h6 class="text-muted ml-2"><del>$123</del></h6> -->
+                            <button data-product="{{product.id}}" data-action="add" class="btn h6 text-decoration-none btn-square update-cart" href=""><i class="fa fa-shopping-cart"></i></button>
                         </div>
                     </div>
                 </div>
@@ -193,7 +193,6 @@
                     <div class="product-img position-relative overflow-hidden">
                         <img class="img-fluid w-100" src="{{product.image.url}}" alt="">
                         <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href="{% url 'shop:detail' slug=product.slug %}"><i class="fa fa-search"></i></a>
                         </div>
                     </div>
@@ -201,6 +200,7 @@
                         <a class="h6 text-decoration-none text-truncate" href="{% url 'shop:detail' slug=product.slug %}">{{product.name}}</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
                             <h5>${{product.price}}</h5>
+                            <button data-product="{{product.id}}" data-action="add" class="btn h6 text-decoration-none btn-square update-cart" href=""><i class="fa fa-shopping-cart"></i></button>
                         </div>
                     </div>
                 </div>

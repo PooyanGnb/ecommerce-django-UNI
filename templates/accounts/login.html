@@ -1,0 +1,43 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>Login</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{% static 'css/signin.css'%}"></head>
+
+<body class="text-center">
+    <form class="form-signin" method="post" action="{% url 'accounts:login' %}">
+        {% csrf_token %}
+        <a href="/" class="text-decoration-none d-block d-lg-none">
+            <span class="h1 text-uppercase text-dark bg-light px-2">Azad</span>
+            <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Shop</span>
+        </a>
+        <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
+        <label for="inputEmail" class="sr-only">Username</label>
+        <input type="text" name="username" class="form-control" placeholder="username" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
+        <!-- <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div> -->
+        <p>Don't have an account? <a href="{% url 'accounts:signup' %}">Sign up here.</a></p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+    </form>
+</body>
+
+</html>

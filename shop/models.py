@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 class Category(models.Model):
@@ -14,6 +16,10 @@ class Color(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @property
+    def numcount(self):
+        return Product.objects.filter(color=self.id).count()
     
 
 class Product(models.Model):
@@ -63,12 +69,46 @@ class Stock(models.Model):
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
     quantity = models.IntegerField()
 
+    class Meta:
+        ordering = ['size']
+
     def __str__(self):
         return f' {self.product.name} - {self.size} '
 
     def decreament(self):
         self.quantity -= 1
         self.save()
+
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+    date_ordered = models.DateTimeField(auto_now_add=True)
+    complete = models.BooleanField(default=False, null=True, blank=False)
+    transaction_id = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return f'{self.id}'
+    
+    @property
+    def get_cart_total(self):
+        orderitems = self.orderitem_set.all()
+        return sum([item.get_total for item in orderitems])
+    
+    @property
+    def get_cart_item(self):
+        orderitems = self.orderitem_set.all()
+        return sum([item.quantity for item in orderitems])
+    
+
+class OrderItem(models.Model):
+    product =  models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
+    quantity =  models.IntegerField(default=0, null=True, blank=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def get_total(self):
+        return self.product.price * self.quantity
 
 
 class Contact(models.Model):
@@ -88,3 +128,19 @@ class NewsLetter(models.Model):
 
     def __str__(self):
         return self.email
+    
+
+class Comment(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    message = models.TextField()
+    approved = models.BooleanField(default=False)
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_date']
+
+    def __str__(self):
+        return f' {self.name} - {self.product} '

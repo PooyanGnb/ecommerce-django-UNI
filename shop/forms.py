@@ -1,6 +1,6 @@
 from django import forms
-from shop.models import Product, Contact, NewsLetter
-# from captcha.fields import CaptchaField
+from shop.models import Product, Contact, NewsLetter, Comment
+from captcha.fields import CaptchaField
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -16,7 +16,7 @@ class ImageForm(ProductForm):
 
 
 class ContactForm(forms.ModelForm):
-    # captcha = CaptchaField()
+    captcha = CaptchaField()
     
     class Meta:
         model = Contact
@@ -27,3 +27,11 @@ class NewsletterForm(forms.ModelForm):
     class Meta:
         model = NewsLetter
         fields = '__all__'
+
+
+class CommentForm(forms.ModelForm):
+    # captcha = CaptchaField()
+    
+    class Meta:
+        model = Comment
+        fields  = ['product', 'name', 'email', 'message']
